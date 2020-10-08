@@ -1,16 +1,36 @@
-import React from 'react';
-import { StyleSheet, StatusBar, View} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, StatusBar, View } from 'react-native';
 import { Card, Input, Button } from 'react-native-elements'
+
+import { firebase } from '../firebase/config'
 
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 
+export default function Login({navigation}) {
 
-export default function Login() {
-    console.log(StatusBar.currentHeight)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const onLoginPress = () => {
+        if(email === '' && password === '') {
+            alert('Enter details to signin!')
+        } else {
+            firebase
+            .auth()
+            .signInWithEmailAndPassword(email, password)
+            .then((res) => {
+              navigation.navigate('Usuario')
+            })
+            .catch(error => {
+                alert(error)
+            });
+        }
+    }
+
     return (
         <View style={styles.container}>
-            <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#fff" translucent = {true}/>
+            {/* <StatusBar barStyle = "dark-content" hidden = {false} backgroundColor = "#fff" translucent = {true}/> */}
             <Card containerStyle={styles.card}>
                 <Card.Title>INICIO DE SESIÓN</Card.Title>
                 <Card.Divider/>
@@ -18,18 +38,23 @@ export default function Login() {
                     labelStyle={styles.input}
                     label='Usuario'
                     placeholder=' Escribe tu usuaro ...'
+                    onChangeText={(text) => setEmail(text)}
+                    value={email}
                     leftIcon={ <IconAntDesign name='user' size={25} color='black'/> }
                 />
                 <Input
                     labelStyle={styles.input}
                     label='Contrasña'
                     placeholder=' Escribe tu contraseña ...'
+                    onChangeText={(text) => setPassword(text)}
+                    value={password}
                     leftIcon={ <IconFontAwesome name='lock' size={25} color='black'/> }
                     secureTextEntry={true}
                 />
                 <Button
                     buttonStyle={styles.button}
                     title=' INGRESAR'
+                    onPress={() => onLoginPress()}
                 />
             </Card>
 

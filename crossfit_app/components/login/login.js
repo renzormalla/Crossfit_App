@@ -13,19 +13,20 @@ export default function Login({navigation}) {
     const [password, setPassword] = useState('')
 
     const onLoginPress = () => {
-        if(email === '' && password === '') {
-            alert('Enter details to signin!')
-        } else {
-            firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
-            .then((res) => {
-              navigation.navigate('Usuario')
-            })
-            .catch(error => {
-                alert(error)
-            });
-        }
+        navigation.navigate('Crear Usuario')
+        // if(email === '' && password === '') {
+        //     alert('Enter details to signin!')
+        // } else {
+        //     firebase
+        //     .auth()
+        //     .signInWithEmailAndPassword(email, password)
+        //     .then((res) => {
+        //       navigation.navigate('Usuario')
+        //     })
+        //     .catch(error => {
+        //         alert(error)
+        //     });
+        // }
     }
 
     return (
@@ -86,3 +87,4 @@ const styles = StyleSheet.create({
         marginHorizontal: 50, 
     }
 });
+    

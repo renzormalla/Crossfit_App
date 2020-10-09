@@ -9,6 +9,7 @@ const Stack = createStackNavigator();
 
 import Login from './components/login/login'
 import User from './components/user/user'
+import CreateUser from './components/login/create-user';
 
 export default function App() {
   return (
@@ -16,6 +17,8 @@ export default function App() {
       <Stack.Navigator>
         
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="Crear Usuario" component={CreateUser} />
+
             <Stack.Screen name="Usuario" component={User} />
             {/* <Stack.Screen name="Registration" component={RegistrationScreen} /> */}
       </Stack.Navigator>

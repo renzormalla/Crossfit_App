@@ -15,7 +15,6 @@ export default function CreateUser({navigation}) {
     const [password, setPassword] = useState('')
 
     const [date, setDate] = useState(new Date());
-    const [dateI, setDateI] = useState(new Date());
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 
@@ -42,11 +41,6 @@ export default function CreateUser({navigation}) {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === 'ios');
         setDate(currentDate);
-    };
-    const onChangeI = (event, selectedDate) => {
-        const currentDate = selectedDate || dateI;
-        setShow(Platform.OS === 'ios');
-        setDateI(currentDate);
     };
 
     const showMode = (currentMode) => {
@@ -84,17 +78,6 @@ export default function CreateUser({navigation}) {
                         is24Hour={true}
                         display="default"
                         onChange={onChange}
-                        />
-                    )}
-                    <Button buttonStyle={styles.buttonDate} onPress={showDatepicker} title={ "Fecha Ingreso:  " + Moment(dateI).format('DD MMMM YYYY')} />
-                    {show && (
-                        <DateTimePicker
-                        testID="dateTimePicker"
-                        value={dateI}
-                        mode={mode}
-                        is24Hour={true}
-                        display="default"
-                        onChange={onChangeI}
                         />
                     )}
                     <Input

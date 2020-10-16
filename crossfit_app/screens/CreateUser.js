@@ -4,14 +4,24 @@ import { Card, Input, Button } from 'react-native-elements'
 import Moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
+import { create_user } from '../service/LoginServices'
+
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import RNPickerSelect from 'react-native-picker-select';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
+
+// YellowBox.ignoreWarnings([
+//     "componentWillReceiveProps",
+//     "Setting a timer",
+// ]);
 
 export default function CreateUser() {
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [rol, setRol] = useState('crossfiter');
+    const [name, setName] = useState('');
+    const [last, setLast] = useState('');
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
@@ -33,7 +43,6 @@ export default function CreateUser() {
         showMode('date');
     };
 
-
     return (
         <SafeAreaView  style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollView}>
@@ -44,11 +53,15 @@ export default function CreateUser() {
                         labelStyle={styles.input}
                         label='Nombre'
                         placeholder=' Escriba el nombre ...'
+                        onChangeText={(text) => setName(text)}
+                        value={name}
                     />
                     <Input
                         labelStyle={styles.input}
                         label='Apellido'
                         placeholder=' Escriba el apellido ...'
+                        onChangeText={(text) => setLast(text)}
+                        value={last}
                     />
                     <Button buttonStyle={styles.buttonDate} onPress={showDatepicker} title={ "Fecha Nacimiento:  " + Moment(date).format('DD MMMM YYYY')} />
                     {show && (
@@ -61,10 +74,16 @@ export default function CreateUser() {
                         onChange={onChange}
                         />
                     )}
-                    <Input
-                        labelStyle={styles.input}
-                        label='Rol'
-                        placeholder=' Seleccione el rol ...'
+                    <RNPickerSelect
+                        
+                        placeholder={{}}
+                        
+                        items={[
+                            { label: 'Crossfiter', value: 'crossfiter' },
+                            { label: 'Coach', value: 'coach' }
+                        ]}
+                        onValueChange={(text) => setRol(text)}
+                        value={rol}
                     />
                     <Input
                         labelStyle={styles.input}
@@ -85,7 +104,7 @@ export default function CreateUser() {
                     <Button
                         buttonStyle={styles.button}
                         title=' CREAR'
-                        // onPress={() => onLoginPress()}
+                        onPress={() => {create_user(email, password, name, last, rol, date)}}
                     />
                 </Card>
             </ScrollView>

@@ -26,7 +26,7 @@ export default function CreateUser() {
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
 
-    Moment.locale('es');
+    Moment.locale('en');
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -140,10 +140,12 @@ const styles = StyleSheet.create({
     buttonDate: {
         marginHorizontal: 15, 
         marginVertical: 5,
+        backgroundColor:'#f2b90a'
     },
     button: {
         marginVertical: 30,
         borderRadius: 10, 
-        marginHorizontal: 50, 
+        marginHorizontal: 50,
+        backgroundColor:'#f2b90a'
     }
 });

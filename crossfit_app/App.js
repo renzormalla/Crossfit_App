@@ -18,6 +18,7 @@ const NavDrawer = createDrawerNavigator();
 import Login from './screens/Login'
 import Home from './screens/Home'
 import CreateUser from './screens/CreateUser'
+import Reserve from './screens/Reserve'
 
 export default function App() {
   
@@ -60,6 +61,16 @@ export default function App() {
                   />
                 }
               }}/>
+              <NavDrawer.Screen name="Reserve" component={Reserve} options={{
+                drawerLabel: 'Reservas',
+                drawerIcon: () => {
+                  return <Icon
+                    name='calendar-plus-o'
+                    type='font-awesome'
+                    color='#517fa4'
+                  />
+                }
+              }}/>
             </NavDrawer.Navigator>
           ) : (
             <NavStack.Navigator>
@@ -84,7 +95,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
+    // backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },

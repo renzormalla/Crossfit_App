@@ -67,7 +67,8 @@ const styles = StyleSheet.create({
     button: {
         marginVertical: 30,
         borderRadius: 10, 
-        marginHorizontal: 50, 
+        marginHorizontal: 50,
+        backgroundColor:'#f2b90a'
     }
 });
     

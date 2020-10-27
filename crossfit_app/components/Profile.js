@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, FlatList, Dimensions, Picker } from 'react-native';
-import { Text, Button, Overlay } from 'react-native-elements'
+import { StyleSheet, View, FlatList, Dimensions } from 'react-native';
+import { Text, Button, Overlay  } from 'react-native-elements'
+import {Picker} from '@react-native-picker/picker';
 
 import ProfileEdit from './ProfileEdit'
 
@@ -76,22 +77,40 @@ export default function Profile() {
                 />
                 <Overlay overlayStyle={styles.overlay} isVisible={visible} onBackdropPress={toggleOverlay}>
                     <Text h4 style={{marginBottom:20, marginHorizontal:30,}}>Elige fecha y hora</Text>
-                    <Button buttonStyle={styles.buttonDate} onPress={showTimepicker} title={ "Hora:  " + Moment(date).format('HH:MM')} />
-                    {/* <Picker
-                        selectedValue={selectedValue}
-                        style={{ height: 50, width: 150 }}
-                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                    >
-                        <Picker.Item label="6:00 - 7:00" value="6:00 - 7:00" />
-                        <Picker.Item label="8:00 - 9:00" value="8:00 - 9:00" />
-                        <Picker.Item label="16:00 - 17:00" value="16:00 - 17:00" />
-                        <Picker.Item label="18:00 - 19:00" value="18:00 - 19:00" />
-                        <Picker.Item label="20:00 - 21:00" value="20:00 - 21:00" />
-                        <Picker.Item label="SD 8:00 - 9:00" value="SD 8:00 - 9:00" />
-                    </Picker> */}
-
+                    {/* <Button buttonStyle={styles.buttonDate} onPress={showTimepicker} title={ "Hora:  " + Moment(date).format('HH:MM')} /> */}
 
                     <Button buttonStyle={styles.buttonDate} onPress={showDatepicker} title={ "Fecha:  " + Moment(date).format('DD-MM-YYYY')} />
+                    {
+                        Moment(date).format('dddd') == 'Saturday' || Moment(date).format('dddd') == 'Sunday' ? (
+                            <Picker
+                                selectedValue={selectedValue}
+                                style={styles.selectHour}
+                                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                            >
+                                <Picker.Item label="8:00" value="8:00" />
+                                <Picker.Item label="9:00" value="9:00" />
+                            </Picker>
+                        ) : (
+                            <Picker
+                                selectedValue={selectedValue}
+                                style={styles.selectHour}
+                                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                            >
+                                <Picker.Item label="6:00" value="6:00" />
+                                <Picker.Item label="7:00" value="7:00" />
+                                <Picker.Item label="8:00" value="8:00" />
+                                <Picker.Item label="9:00" value="9:00" />
+                                <Picker.Item label="16:00" value="16:00" />
+                                <Picker.Item label="17:00" value="17:00" />
+                                <Picker.Item label="18:00" value="18:00" />
+                                <Picker.Item label="19:00" value="19:00" />
+                                <Picker.Item label="20:00" value="20:00" />
+                            </Picker>
+                        )
+                    }
+                    
+
+                    
                     {show && (
                         <DateTimePicker
                         testID="dateTimePicker"
@@ -155,7 +174,7 @@ const styles = StyleSheet.create({
     },
     overlay: {
         justifyContent: 'center',
-        // alignItems: 'center',
+        alignItems: 'center',
         width:'90%',
         height:'40%'
     },
@@ -164,4 +183,9 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         backgroundColor:'#f2b90a'
     },
+    selectHour: {
+        marginHorizontal: 50,
+        height: 50, 
+        width: 150
+    }
 });

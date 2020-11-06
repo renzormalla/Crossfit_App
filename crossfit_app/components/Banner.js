@@ -1,11 +1,62 @@
-import React from 'react';
-import { StyleSheet, StatusBar, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, StatusBar, View, Image, Button } from 'react-native';
 import { Avatar, Text } from 'react-native-elements'
+import * as firebase from 'firebase';
+import * as ImagePicker from 'expo-image-picker';
 
 
 export default function Banner() {
-    return (
-        <View style={styles.container}>
+
+    const [image, setImage] = useState(null);
+    const [name, setName] = useState('');
+    const [last, setLast] = useState('');
+
+    const user = firebase.auth().currentUser.email;
+
+    firebase.firestore().collection('User').doc(user)
+    .get().then(function(doc) {
+        if (doc.exists) {
+            let data = doc.data()
+            setName(data.name)
+            setLast(data.last)
+
+            console.log(data.name)
+            console.log(data.last)
+        } else {
+            Alert.alert("Informacion no encontrada")
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
+
+    const test = firebase.storage().ref().child(user).getDownloadURL()
+    .then((res) => {
+        setImage(res);
+    })
+    .catch(error => {
+        console.log("empty")
+    });
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+        const uploadUrl = await uploadImageAsync(result.uri, user);
+        await setImage(result.uri);
+    }
+    
+  };
+
+  return (
+
+    <View style={styles.container}>
             <Avatar
                 size="xlarge"
                 rounded
@@ -13,17 +64,46 @@ export default function Banner() {
                 onPress={() => console.log("Works!")}
                 activeOpacity={0.7}
                 containerStyle = {styles.avatar}
+                onPress={pickImage}
+                source={{ uri: image }}
             />
             <View style={styles.textLetfRight}>
                 <View style={{flex: 1}}>
-                    <Text h3>Nombre</Text>
+                    <Text h3>{ name }</Text>
                 </View>
                 <View style={{flex: 1}}>
-                    <Text style={{textAlign: 'right', marginRight: 20}} h3 >Apellido</Text>
+                    <Text style={{textAlign: 'right', marginRight: 20}} h3 >{ last }</Text>
                 </View>
             </View>
         </View>
-    );
+  );
+}
+
+async function uploadImageAsync(uri, user) {
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function() {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function(e) {
+        console.log(e);
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', uri, true);
+      xhr.send(null);
+    });
+  
+    const ref = firebase
+      .storage()
+      .ref()
+      .child(user);
+    const snapshot = await ref.put(blob);
+  
+    // We're done with the blob, close and release it
+    blob.close();
+  
+    return await snapshot.ref.getDownloadURL();
 }
     
 const styles = StyleSheet.create({

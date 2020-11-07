@@ -16,9 +16,12 @@ const NavStack = createStackNavigator();
 const NavDrawer = createDrawerNavigator();
 
 import Login from './screens/Login'
+import CambioClave from './screens/CambioClave'
 import Home from './screens/Home'
 import CreateUser from './screens/CreateUser'
 import Reserve from './screens/Reserve'
+import CerrarSesion from "./screens/CerraSesion";
+
 
 export default function App() {
   
@@ -47,7 +50,7 @@ export default function App() {
                   return <Icon
                     name='home'
                     type='font-awesome'
-                    color='#517fa4'
+                    color='#f2b90a'
                   />
                 }
               }}/>
@@ -57,7 +60,7 @@ export default function App() {
                   return <Icon
                     name='user-plus'
                     type='font-awesome'
-                    color='#517fa4'
+                    color='#f2b90a'
                   />
                 }
               }}/>
@@ -67,7 +70,17 @@ export default function App() {
                   return <Icon
                     name='calendar-plus-o'
                     type='font-awesome'
-                    color='#517fa4'
+                    color='#f2b90a'
+                  />
+                }
+              }}/>
+              <NavDrawer.Screen name="CerrarSesion" component={CerrarSesion} options={{
+                drawerLabel: 'Cerrar Sesion',
+                drawerIcon: () => {
+                  return <Icon
+                    name='sign-out'
+                    type='font-awesome'
+                    color='#f2b90a'
                   />
                 }
               }}/>
@@ -75,6 +88,7 @@ export default function App() {
           ) : (
             <NavStack.Navigator>
               <NavStack.Screen name="Login" component={Login}/>
+              <NavStack.Screen name="CambioClave" component={CambioClave}/>
             </NavStack.Navigator>
           )
         }

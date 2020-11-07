@@ -60,3 +60,28 @@ export const create_user = (email, password, name, last, rol, date) => {
         });
     }
 }
+
+export const signOut = () => {
+    firebase
+    .auth()
+    .signOut()
+    .then((obj) => {
+        Alert.alert("Info","Sesion Finalizada")
+    })
+    .catch((error) => {
+        Alert.alert("Error", error.message+" - "+error.code)
+    })
+}
+
+export const recuperarClave = (email, fnIrLogin) => {
+    firebase
+    .auth()
+    .sendPasswordResetEmail(email)
+    .then((obj) => {
+        Alert.alert("Info","Ingrese a su correo para restaurar la clave")
+        fnIrLogin()
+    })
+    .catch((error) => {
+        Alert.alert("Error", error.message+" - "+error.code)
+    })
+}

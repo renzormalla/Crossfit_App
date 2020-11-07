@@ -40,6 +40,12 @@ export default function Login({navigation}) {
                     title=' INGRESAR'
                     onPress={() => {ingresar(email, password)}}
                 />
+                <Button buttonStyle={styles.button}
+                    title="Recuperar Clave"
+                    onPress={() => {
+                    navigation.navigate("CambioClave")
+                    }}
+                />
             </Card>
 
         </View>
@@ -65,10 +71,14 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
     button: {
-        marginVertical: 30,
+        marginVertical: 20,
         borderRadius: 10, 
         marginHorizontal: 50,
         backgroundColor:'#f2b90a'
-    }
+    },
+    btnExtra: {
+        flex: 1,
+        flexDirection: "row",
+    },
 });
     

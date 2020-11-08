@@ -1,33 +1,25 @@
-import React, { useState } from 'react';
-import { StyleSheet, StatusBar, View, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, TextInput } from 'react-native';
 import { Avatar, Text } from 'react-native-elements'
 import * as firebase from 'firebase';
 import * as ImagePicker from 'expo-image-picker';
-
+import uploadData from '../service/LoginServices';
 
 export default function Banner() {
 
     const [image, setImage] = useState(null);
     const [name, setName] = useState('');
     const [last, setLast] = useState('');
+    const user = global.emailUsuario;
 
-    const user = firebase.auth().currentUser.email;
-
-    firebase.firestore().collection('User').doc(user)
-    .get().then(function(doc) {
-        if (doc.exists) {
-            let data = doc.data()
-            setName(data.name)
-            setLast(data.last)
-
-            console.log(data.name)
-            console.log(data.last)
-        } else {
-            Alert.alert("Informacion no encontrada")
-        }
-    }).catch(function(error) {
-        console.log("Error getting document:", error);
+    useEffect(() => {
+        uploadData(upload, user);
     });
+
+    const upload = (data) => {
+        setName(data.name)
+        setLast(data.last)
+    }
 
     const test = firebase.storage().ref().child(user).getDownloadURL()
     .then((res) => {
@@ -61,7 +53,6 @@ export default function Banner() {
                 size="xlarge"
                 rounded
                 title="NA"
-                onPress={() => console.log("Works!")}
                 activeOpacity={0.7}
                 containerStyle = {styles.avatar}
                 onPress={pickImage}

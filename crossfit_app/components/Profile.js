@@ -1,23 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, FlatList, Dimensions } from 'react-native';
 import { Text  } from 'react-native-elements'
-
+import { uploadProfile } from '../service/LoginServices';
 import ProfileDetail from './ProfileDetail'
 
 
 
 export default function Profile() {
     let numColumns = 6;
+    const [city, setCity] = useState('');
+    const [division, setDivision] = useState('');
+    const [age, setAge] = useState('');
+    const [height, setHeight] = useState('');
+    const [weight, setWeight] = useState('');
+    const [biography, setBiography] = useState('');
+    const user = global.emailUsuario;
+
+    useEffect(() => {
+        uploadProfile(upload, user);
+    });
+
+    const upload = (data) => {
+        setCity(data.city)
+        setDivision(data.division)
+        setAge(data.age)
+        setHeight(data.height)
+        setWeight(data.weight)
+        setBiography(data.biography)
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.containerList}>
                 <FlatList 
                     data={[
-                    {key: 'CITY', value: 'Quito'},
-                    {key: 'DIVISION', value: 'Women'},
-                    {key: 'AGE', value: '34'},
-                    {key: 'HEIGHT', value: '162 cm'},
-                    {key: 'WEIGHT', value: '59 kg'},
+                    {key: 'CITY', value: city},
+                    {key: 'DIVISION', value: division},
+                    {key: 'AGE', value: age},
+                    {key: 'HEIGHT', value: height},
+                    {key: 'WEIGHT', value: weight},
                     ]}
                     renderItem={({item}) => 
                         <View style={styles.itemStyle}>
@@ -29,8 +50,8 @@ export default function Profile() {
                 />
             </View>
             <View>
-                <Text h4 style={styles.bioTitle} > Biografia</Text>
-                <Text style={styles.bio} > A native of Oslo, Norway, Kristin Holte is a three-time CrossFit Games veteran. After starting CrossFit in 2012, she took seventh in her first regional appearance at the 2013 Europe Regional. She has qualified for the Games every year since, consistently finishing in the top 17 with a career-best finish of 2nd in 2019. A former gymnast and endurance athlete, Holte is a nutritionist by profession. </Text>
+                <Text h4 style={styles.bioTitle} > Biografía</Text>
+                <Text style={styles.bio} > {biography} </Text>
             </View>
             <ProfileDetail />            
         </View>

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, StatusBar, View, Image, Button, YellowBox } from 'react-native';
+import { StyleSheet, View} from 'react-native';
 import { Avatar, Text } from 'react-native-elements'
 import * as firebase from 'firebase';
 import * as ImagePicker from 'expo-image-picker';
-import uploadData from '../service/LoginServices'
-import { set } from 'react-native-reanimated';
+import { uploadData } from '../service/LoginServices';
 
 export default function Banner() {
 
@@ -21,7 +20,6 @@ export default function Banner() {
         setName(data.name)
         setLast(data.last)
     }
-
 
     const test = firebase.storage().ref().child(user).getDownloadURL()
     .then((res) => {

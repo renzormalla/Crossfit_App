@@ -35,7 +35,20 @@ export const create_user = (email, password, name, last, rol, date) => {
                     last: last,
                     rol: rol,
                     date: date,
-                    email: email
+                    email: email,
+                    city: 'Quito',
+                    division: 'none',
+                    age: 0,
+                    height: '0 cm',
+                    weight: '0 kg',
+                    biography: 'Inserte su biografía aquí',
+                    back_squat: 0,
+                    clean: 0,
+                    clean_jerk: 0,
+                    snatch: 0,
+                    deadlift: 0,
+                    pull_ups: 0,
+                    fran: '00:00'
                 })
                 .catch(function() {
                     Alert.alert(
@@ -101,4 +114,16 @@ export const uploadData = (upload, user) => {
     });
 }
 
-export default uploadData;
+export const uploadProfile = (upload, user) => {
+
+    firebase.firestore().collection('User').doc(user)
+    .get().then(function(doc) {
+    if (doc.exists) {
+        upload(doc.data())
+    } else {
+        Alert.alert("Informacion no encontrada");
+    }
+    }).catch(function(error) {
+        Alert.alert("Error getting document:", error);
+    });
+}

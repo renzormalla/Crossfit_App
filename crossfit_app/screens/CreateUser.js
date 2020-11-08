@@ -86,6 +86,7 @@ export default function CreateUser() {
                         value={rol}
                     />
                     <Input
+                        caretHidden
                         labelStyle={styles.input}
                         label='Correo'
                         placeholder=' Escriba el correo ...'

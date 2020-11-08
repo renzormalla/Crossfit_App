@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { Input } from 'react-native-elements'
 
-export default function ProfileEdit() {
+export default function ProfileDetailEdit() {
     const [backSquat, setBackSquat] = useState('159')
     const [clean, setClean] = useState('160')
     const [cleanJerk, setCleanJerk] = useState('165')

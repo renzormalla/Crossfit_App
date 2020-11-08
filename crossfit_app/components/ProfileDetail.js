@@ -3,7 +3,7 @@ import { StyleSheet, View, FlatList } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { Text } from 'react-native-elements'
 
-export default function ProfileEdit() {
+export default function ProfileDetail() {
     return (
         <DataTable style={styles.dataTable}>
             <DataTable.Header>

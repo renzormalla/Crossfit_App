@@ -3,9 +3,9 @@ import { StyleSheet, View, TextInput } from 'react-native';
 import { Avatar, Text } from 'react-native-elements'
 import * as firebase from 'firebase';
 import * as ImagePicker from 'expo-image-picker';
-import uploadData from '../service/LoginServices';
+import { uploadData } from '../service/LoginServices';
 
-export default function Banner() {
+export default function BannerEdit() {
 
     const [image, setImage] = useState(null);
     const [name, setName] = useState('');

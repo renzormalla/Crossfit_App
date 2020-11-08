@@ -1,17 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, FlatList, Dimensions, TextInput  } from 'react-native';
 import { Text } from 'react-native-elements'
-
+import { uploadProfile } from '../service/LoginServices';
 import ProfileDetailEdit from './ProfileDetailEdit'
 
-export default function Profile() {
+export default function ProfileEdit() {
     let numColumns = 6;
-    const [city, setCity] = useState('Quito')
-    const [division, setDivision] = useState('Women')
-    const [age, setAge] = useState('34')
-    const [height, setHeight] = useState('162 cm')
-    const [weight, setWeight] = useState('59 kg')
-    const [bio, setBio] = useState('A native of Oslo, Norway, Kristin Holte is a three-time CrossFit Games veteran. After starting CrossFit in 2012, she took seventh in her first regional appearance at the 2013 Europe Regional. She has qualified for the Games every year since, consistently finishing in the top 17 with a career-best finish of 2nd in 2019. A former gymnast and endurance athlete, Holte is a nutritionist by profession.')
+    const [city, setCity] = useState('');
+    const [division, setDivision] = useState('');
+    const [age, setAge] = useState('');
+    const [height, setHeight] = useState('');
+    const [weight, setWeight] = useState('');
+    const [biography, setBiography] = useState('');
+    const user = global.emailUsuario;
+
+    useEffect(() => {
+        uploadProfile(upload, user);
+    });
+
+    const upload = (data) => {
+        setCity(data.city)
+        setDivision(data.division)
+        setAge(data.age)
+        setHeight(data.height)
+        setWeight(data.weight)
+        setBiography(data.biography)
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.containerList}>
@@ -38,8 +53,8 @@ export default function Profile() {
                 <Text h4 style={styles.bioTitle} > Biografia</Text>
                 <TextInput style={styles.bio} 
                     multiline maxLength={1000} numberOfLines={7}
-                    onChangeText={text => setBio(text)}
-                    value={ bio }
+                    onChangeText={text => setBiography(text)}
+                    value={ biography }
                 > 
                 </TextInput>
                 

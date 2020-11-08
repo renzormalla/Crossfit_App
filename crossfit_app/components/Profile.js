@@ -76,6 +76,7 @@ export default function Profile() {
                     onPress={toggleOverlay}
                 />
                 <Overlay overlayStyle={styles.overlay} isVisible={visible} onBackdropPress={toggleOverlay}>
+                    <View>
                     <Text h4 style={{marginBottom:20, marginHorizontal:30,}}>Elige fecha y hora</Text>
                     {/* <Button buttonStyle={styles.buttonDate} onPress={showTimepicker} title={ "Hora:  " + Moment(date).format('HH:MM')} /> */}
 
@@ -121,6 +122,7 @@ export default function Profile() {
                         onChange={onChange}
                         />
                     )}
+                </View>
                 </Overlay>
             </View>
             

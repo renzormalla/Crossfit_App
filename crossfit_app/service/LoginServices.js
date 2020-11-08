@@ -1,4 +1,5 @@
 import { Alert } from "react-native"
+import React, { useState} from 'react';
 import firebase from 'firebase'
 
 
@@ -85,3 +86,19 @@ export const recuperarClave = (email, fnIrLogin) => {
         Alert.alert("Error", error.message+" - "+error.code)
     })
 }
+
+export const uploadData = (upload, user) => {
+
+    firebase.firestore().collection('User').doc(user)
+    .get().then(function(doc) {
+    if (doc.exists) {
+        upload(doc.data())
+    } else {
+        Alert.alert("Informacion no encontrada");
+    }
+    }).catch(function(error) {
+        Alert.alert("Error getting document:", error);
+    });
+}
+
+export default uploadData;

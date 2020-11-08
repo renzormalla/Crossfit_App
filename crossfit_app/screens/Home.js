@@ -5,6 +5,7 @@ import { Card, Input, Button } from 'react-native-elements'
 import { createStackNavigator } from '@react-navigation/stack';
 
 import User from './User'
+import UserEdit from './UserEdit'
 
 const NavStack = createStackNavigator();
 
@@ -12,19 +13,19 @@ export default function Home() {
     return (
         <NavStack.Navigator initialRouteName="User">
             <NavStack.Screen
-            name="User"
-            component={User}
-            options={{
-                title: "Usuario"
-            }}
+                name="User"
+                component={User}
+                options={{
+                    title: "Usuario"
+                }}
             />
-            {/* <NavStack.Screen
-            name="Mapa"
-            component={Mapa}
-            options={{
-                title: "Mapa"
-            }}
-            /> */}
+            <NavStack.Screen
+                name="UserEdit"
+                component={UserEdit}
+                options={{
+                    title: "Editar Usuario"
+                }}
+            />
         </NavStack.Navigator>
     );
 }

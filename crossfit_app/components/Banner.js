@@ -6,11 +6,6 @@ import * as ImagePicker from 'expo-image-picker';
 import uploadData from '../service/LoginServices'
 import { set } from 'react-native-reanimated';
 
-YellowBox.ignoreWarnings([
-    "componentWillReceiveProps",
-    "Setting a timer",
-]);
-
 export default function Banner() {
 
     const [image, setImage] = useState(null);
@@ -26,6 +21,7 @@ export default function Banner() {
         setName(data.name)
         setLast(data.last)
     }
+
 
     const test = firebase.storage().ref().child(user).getDownloadURL()
     .then((res) => {

@@ -34,7 +34,7 @@ export default function Profile() {
                     numColumns={numColumns}
                 />
             </View>
-            <View>
+            <View style={{width:"100%"}}>
                 <Text h4 style={styles.bioTitle} > Biografia</Text>
                 <TextInput style={styles.bio} 
                     multiline maxLength={1000} numberOfLines={7}

@@ -49,7 +49,7 @@ export default function Profile() {
                     numColumns={numColumns}
                 />
             </View>
-            <View>
+            <View style={{width:"100%"}}>
                 <Text h4 style={styles.bioTitle} > Biografía</Text>
                 <Text style={styles.bio} > {biography} </Text>
             </View>

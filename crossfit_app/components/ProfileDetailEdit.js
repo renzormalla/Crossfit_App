@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { Input } from 'react-native-elements'
+import { uploadDetail } from '../service/LoginServices';
 
 export default function ProfileDetailEdit() {
-    const [backSquat, setBackSquat] = useState('159')
-    const [clean, setClean] = useState('160')
-    const [cleanJerk, setCleanJerk] = useState('165')
-    const [snatch, setSnatch] = useState('70')
-    const [deadlitf, setDeadlitf] = useState('95')
-    const [maxPull, setMaxPull] = useState('180')
-    const [fran, setFran] = useState('100')
+    const [back_squat, setBackSquat] = useState('');
+    const [clean, setClean] = useState('');
+    const [clean_jerk, setCleanJerk] = useState('');
+    const [snatch, setSnatch] = useState('');
+    const [deadlift, setDeadlift] = useState('');
+    const [pull_ups, setPullUps] = useState('');
+    const [fran, setFran] = useState('');
+    const user = global.emailUsuario;
+
+    useEffect(() => {
+        uploadDetail(upload, user);
+    });
+
+    const upload = (data) => {
+        setBackSquat(data.back_squat)
+        setClean(data.clean)
+        setCleanJerk(data.clean_jerk)
+        setSnatch(data.snatch)
+        setDeadlift(data.deadlift)
+        setPullUps(data.pull_ups)
+        setFran(data.fran)
+    }
 
     return (
         <DataTable style={styles.dataTable}>
@@ -24,7 +40,7 @@ export default function ProfileDetailEdit() {
                 <DataTable.Cell numeric>
                     <Input style={styles.inputTable}
                         onChangeText={(text) => setBackSquat(text)}
-                        value={backSquat}
+                        value={back_squat}
                     />
                 </DataTable.Cell>
             </DataTable.Row>
@@ -42,7 +58,7 @@ export default function ProfileDetailEdit() {
                 <DataTable.Cell numeric>
                     <Input style={styles.inputTable}
                         onChangeText={(text) => setCleanJerk(text)}
-                        value={cleanJerk}
+                        value={clean_jerk}
                     />
                 </DataTable.Cell>
             </DataTable.Row>
@@ -59,8 +75,8 @@ export default function ProfileDetailEdit() {
                 <DataTable.Cell >Deadlift</DataTable.Cell>
                 <DataTable.Cell numeric>
                     <Input style={styles.inputTable}
-                        onChangeText={(text) => setDeadlitf(text)}
-                        value={deadlitf}
+                        onChangeText={(text) => setDeadlift(text)}
+                        value={deadlift}
                     />
                 </DataTable.Cell>
             </DataTable.Row>
@@ -68,8 +84,8 @@ export default function ProfileDetailEdit() {
                 <DataTable.Cell >Max Pull-ups</DataTable.Cell>
                 <DataTable.Cell numeric>
                     <Input style={styles.inputTable}
-                        onChangeText={(text) => setMaxPull(text)}
-                        value={maxPull}
+                        onChangeText={(text) => setPull(text)}
+                        value={pull_ups}
                     />
                 </DataTable.Cell>
             </DataTable.Row>

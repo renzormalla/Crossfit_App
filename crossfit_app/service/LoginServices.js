@@ -127,3 +127,17 @@ export const uploadProfile = (upload, user) => {
         Alert.alert("Error getting document:", error);
     });
 }
+
+export const uploadDetail = (upload, user) => {
+
+    firebase.firestore().collection('User').doc(user)
+    .get().then(function(doc) {
+    if (doc.exists) {
+        upload(doc.data())
+    } else {
+        Alert.alert("Informacion no encontrada");
+    }
+    }).catch(function(error) {
+        Alert.alert("Error getting document:", error);
+    });
+}

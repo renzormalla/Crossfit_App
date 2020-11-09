@@ -16,7 +16,7 @@ export default function ProfileEdit() {
 
     useEffect(() => {
         uploadProfile(upload, user);
-    });
+    }, []);
 
     const upload = (data) => {
         setCity(data.city)

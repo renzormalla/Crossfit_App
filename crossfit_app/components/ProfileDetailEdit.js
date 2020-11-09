@@ -16,16 +16,16 @@ export default function ProfileDetailEdit() {
 
     useEffect(() => {
         uploadDetail(upload, user);
-    });
+    }, []);
 
     const upload = (data) => {
-        setBackSquat(data.back_squat)
-        setClean(data.clean)
-        setCleanJerk(data.clean_jerk)
-        setSnatch(data.snatch)
-        setDeadlift(data.deadlift)
-        setPullUps(data.pull_ups)
-        setFran(data.fran)
+        setBackSquat(data.back_squat.toString())
+        setClean(data.clean.toString())
+        setCleanJerk(data.clean_jerk.toString())
+        setSnatch(data.snatch.toString())
+        setDeadlift(data.deadlift.toString())
+        setPullUps(data.pull_ups.toString())
+        setFran(data.fran.toString())
     }
 
     return (

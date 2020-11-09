@@ -14,7 +14,7 @@ export default function BannerEdit() {
 
     useEffect(() => {
         uploadData(upload, user);
-    });
+    }, []);
 
     const upload = (data) => {
         setName(data.name)

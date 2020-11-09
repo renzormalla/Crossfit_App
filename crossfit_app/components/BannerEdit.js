@@ -5,11 +5,11 @@ import * as firebase from 'firebase';
 import * as ImagePicker from 'expo-image-picker';
 import { uploadData } from '../service/LoginServices';
 
-export default function BannerEdit() {
+export default function BannerEdit({name, last, setName, setLast}) {
 
     const [image, setImage] = useState(null);
-    const [name, setName] = useState('');
-    const [last, setLast] = useState('');
+    // const [name, setName] = useState('');
+    // const [last, setLast] = useState('');
     const user = global.emailUsuario;
 
     useEffect(() => {

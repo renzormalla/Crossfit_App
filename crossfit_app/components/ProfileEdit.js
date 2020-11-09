@@ -4,15 +4,17 @@ import { Text } from 'react-native-elements'
 import { uploadProfile } from '../service/LoginServices';
 import ProfileDetailEdit from './ProfileDetailEdit'
 
-export default function ProfileEdit() {
-    let numColumns = 6;
-    const [city, setCity] = useState('');
-    const [division, setDivision] = useState('');
-    const [age, setAge] = useState('');
-    const [height, setHeight] = useState('');
-    const [weight, setWeight] = useState('');
-    const [biography, setBiography] = useState('');
-    const user = global.emailUsuario;
+export default function ProfileEdit({back_squat, clean, clean_jerk, snatch, deadlift, pull_ups, fran, 
+    setBackSquat, setClean, setCleanJerk, setSnatch, setDeadlift, setPullUps, setFran, city, division, age, 
+    height, weight, biography, setAge, setCity, setDivision, setHeight, setWeight, setBiography}) {
+        let numColumns = 6;
+        // const [city, setCity] = useState('');
+        // const [division, setDivision] = useState('');
+        // const [age, setAge] = useState('');
+        // const [height, setHeight] = useState('');
+        // const [weight, setWeight] = useState('');
+        // const [biography, setBiography] = useState('');
+        const user = global.emailUsuario;
 
     useEffect(() => {
         uploadProfile(upload, user);
@@ -59,7 +61,15 @@ export default function ProfileEdit() {
                 </TextInput>
                 
             </View>
-            <ProfileDetailEdit />
+            <ProfileDetailEdit 
+                back_squat = {back_squat} setBackSquat = {(back_squat) => setBackSquat(back_squat)}
+                clean = {clean} setClean = {(clean) => setClean(clean)}
+                clean_jerk = {clean_jerk} setCleanJerk = {(clean_jerk) => setCleanJerk(clean_jerk)}
+                snatch = {snatch} setSnatch = {(snatch) => setSnatch(snatch)}
+                deadlift = {deadlift} setDeadlift = {(deadlift) => setDeadlift(deadlift)}
+                pull_ups = {pull_ups} setPullUps = {(pull_ups) => setPullUps(pull_ups)}
+                fran = {fran} setFran = {(fran) => setFran(fran)}
+            />
         </View>
     );
 }

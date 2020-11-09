@@ -4,14 +4,16 @@ import { DataTable } from 'react-native-paper';
 import { Input } from 'react-native-elements'
 import { uploadDetail } from '../service/LoginServices';
 
-export default function ProfileDetailEdit() {
-    const [back_squat, setBackSquat] = useState('');
-    const [clean, setClean] = useState('');
-    const [clean_jerk, setCleanJerk] = useState('');
-    const [snatch, setSnatch] = useState('');
-    const [deadlift, setDeadlift] = useState('');
-    const [pull_ups, setPullUps] = useState('');
-    const [fran, setFran] = useState('');
+export default function ProfileDetailEdit({
+    back_squat, clean, clean_jerk, snatch, deadlift, pull_ups, fran, setBackSquat, setClean, setCleanJerk,
+    setSnatch, setDeadlift, setPullUps, setFran}) {
+    // const [back_squat, setBackSquat] = useState('');
+    // const [clean, setClean] = useState('');
+    // const [clean_jerk, setCleanJerk] = useState('');
+    // const [snatch, setSnatch] = useState('');
+    // const [deadlift, setDeadlift] = useState('');
+    // const [pull_ups, setPullUps] = useState('');
+    // const [fran, setFran] = useState('');
     const user = global.emailUsuario;
 
     useEffect(() => {
@@ -84,7 +86,7 @@ export default function ProfileDetailEdit() {
                 <DataTable.Cell >Max Pull-ups</DataTable.Cell>
                 <DataTable.Cell numeric>
                     <Input style={styles.inputTable}
-                        onChangeText={(text) => setPull(text)}
+                        onChangeText={(text) => setPullUps(text)}
                         value={pull_ups}
                     />
                 </DataTable.Cell>

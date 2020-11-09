@@ -1,6 +1,7 @@
 import { Alert } from "react-native"
 import React, { useState} from 'react';
 import firebase from 'firebase'
+import { exp } from "react-native-reanimated";
 
 
 export const ingresar = (email, password) => {
@@ -17,6 +18,36 @@ export const ingresar = (email, password) => {
 			Alert.alert("Error", error.message+" - "+error.code)
 		});
 	}
+}
+
+export const update_user = (name, last, email, city, division, age, height, weight, biography, back_squat, clean, clean_jerk, snatch, deadlift, pull_ups, fran) => {
+    firebase
+        .firestore()
+        .collection('User')
+        .doc(email).set({
+            name: name,
+            last: last,
+            city: city,
+            division: division,
+            age: age,
+            height: height,
+            weight: weight,
+            biography: biography,
+            back_squat: back_squat,
+            clean: clean,
+            clean_jerk: clean_jerk,
+            snatch: snatch,
+            deadlift: deadlift,
+            pull_ups: pull_ups,
+            fran: fran
+        })
+        .catch(function() {
+            Alert.alert(
+                "Error",
+                "Porfavor llene todos los datos", [],
+                { cancelable: true }
+            );
+        });
 }
 
 export const create_user = (email, password, name, last, rol, date) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, View, TextInput} from 'react-native';
 import { Avatar, Text } from 'react-native-elements'
 import * as firebase from 'firebase';
 import * as ImagePicker from 'expo-image-picker';

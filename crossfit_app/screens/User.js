@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Image, View, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Text, Button, Overlay } from 'react-native-elements'
+import { uploadData } from '../service/LoginServices';
+import { uploadDetail } from '../service/LoginServices';
+import { uploadProfile } from '../service/LoginServices';
+import { useFocusEffect } from '@react-navigation/native';
 
 import {Picker} from '@react-native-picker/picker';
 
@@ -10,6 +14,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Banner from '../components/Banner'
 import Profile from '../components/Profile'
+import { render } from 'react-dom';
 
 const image = {uri:'../assets/logo.jpg'};
 
@@ -20,8 +25,54 @@ export default function User({navigation}) {
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
+    const [back_squat, setBackSquat] = useState('');
+    const [clean, setClean] = useState('');
+    const [clean_jerk, setCleanJerk] = useState('');
+    const [snatch, setSnatch] = useState('');
+    const [deadlift, setDeadlift] = useState('');
+    const [pull_ups, setPullUps] = useState('');
+    const [fran, setFran] = useState('');
+    const [city, setCity] = useState('');
+    const [division, setDivision] = useState('');
+    const [age, setAge] = useState('');
+    const [height, setHeight] = useState('');
+    const [weight, setWeight] = useState('');
+    const [biography, setBiography] = useState('');
+    const [name, setName] = useState('');
+    const [last, setLast] = useState('');
+    const user = global.emailUsuario;
 
     Moment.locale('en');
+
+    useFocusEffect(() => {
+        uploadData(upload_data, user);
+        uploadProfile(upload_profile, user);
+        uploadDetail(upload_detail, user);
+    });
+
+    const upload_data = (data) => {
+        setName(data.name)
+        setLast(data.last)
+    }
+
+    const upload_profile = (data) => {
+        setCity(data.city)
+        setDivision(data.division)
+        setAge(data.age)
+        setHeight(data.height)
+        setWeight(data.weight)
+        setBiography(data.biography)
+    }
+
+    const upload_detail = (data) => {
+        setBackSquat(data.back_squat)
+        setClean(data.clean)
+        setCleanJerk(data.clean_jerk)
+        setSnatch(data.snatch)
+        setDeadlift(data.deadlift)
+        setPullUps(data.pull_ups)
+        setFran(data.fran)
+    }
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate || date;
@@ -47,8 +98,25 @@ export default function User({navigation}) {
             <Image source={require('../assets/logo.jpg')} style={styles.backgroundImage}/>
             {/* <ImageBackground source={require('../assets/logo.jpg')}> */}
                 <ScrollView contentContainerStyle={styles.scrollView}>
-                    <Banner />
-                    <Profile />
+                    <Banner 
+                        name = {name} setName = {(name) => setName(name)}
+                        last = {last} setLast = {(last) => setLast(last)}
+                    />
+                    <Profile 
+                        city = {city} setCity = {(city) => setCity(city)}
+                        division = {division} setDivision = {(division) => setDivision(division)}
+                        age = {age} setAge = {(age) => setAge(age)}
+                        height = {height} setHeight = {(height) => setHeight(height)}
+                        weight = {weight} setWeight = {(weight) => setWeight(weight)}
+                        biography = {biography} setBiography = {(biography) => setBiography(biography)}
+                        back_squat = {back_squat} setBackSquat = {(back_squat) => setBackSquat(back_squat)}
+                        clean = {clean} setClean = {(clean) => setClean(clean)}
+                        clean_jerk = {clean_jerk} setCleanJerk = {(clean_jerk) => setCleanJerk(clean_jerk)}
+                        snatch = {snatch} setSnatch = {(snatch) => setSnatch(snatch)}
+                        deadlift = {deadlift} setDeadlift = {(deadlift) => setDeadlift(deadlift)}
+                        pull_ups = {pull_ups} setPullUps = {(pull_ups) => setPullUps(pull_ups)}
+                        fran = {fran} setFran = {(fran) => setFran(fran)}
+                    />
                     <View style={styles.containerButton}>
                         <Button
                             buttonStyle={styles.button}

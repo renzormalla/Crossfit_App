@@ -7,13 +7,6 @@ import { uploadDetail } from '../service/LoginServices';
 export default function ProfileDetailEdit({
     back_squat, clean, clean_jerk, snatch, deadlift, pull_ups, fran, setBackSquat, setClean, setCleanJerk,
     setSnatch, setDeadlift, setPullUps, setFran}) {
-    // const [back_squat, setBackSquat] = useState('');
-    // const [clean, setClean] = useState('');
-    // const [clean_jerk, setCleanJerk] = useState('');
-    // const [snatch, setSnatch] = useState('');
-    // const [deadlift, setDeadlift] = useState('');
-    // const [pull_ups, setPullUps] = useState('');
-    // const [fran, setFran] = useState('');
     const user = global.emailUsuario;
 
     useEffect(() => {

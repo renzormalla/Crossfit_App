@@ -8,12 +8,7 @@ export default function ProfileEdit({back_squat, clean, clean_jerk, snatch, dead
     setBackSquat, setClean, setCleanJerk, setSnatch, setDeadlift, setPullUps, setFran, city, division, age, 
     height, weight, biography, setAge, setCity, setDivision, setHeight, setWeight, setBiography}) {
         let numColumns = 6;
-        // const [city, setCity] = useState('');
-        // const [division, setDivision] = useState('');
-        // const [age, setAge] = useState('');
-        // const [height, setHeight] = useState('');
-        // const [weight, setWeight] = useState('');
-        // const [biography, setBiography] = useState('');
+
         const user = global.emailUsuario;
 
     useEffect(() => {

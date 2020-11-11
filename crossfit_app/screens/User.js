@@ -6,21 +6,26 @@ import { uploadData } from '../service/LoginServices';
 import { uploadDetail } from '../service/LoginServices';
 import { uploadProfile } from '../service/LoginServices';
 import { useFocusEffect } from '@react-navigation/native';
-
-import {Picker} from '@react-native-picker/picker';
+import { DataTable } from 'react-native-paper';
 
 import Moment from 'moment';
-import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Banner from '../components/Banner'
 import Profile from '../components/Profile'
-import { render } from 'react-dom';
+import Reserve from '../components/Reserve';
 
 const image = {uri:'../assets/logo.jpg'};
 
 export default function User({navigation}) {
     const [visible, setVisible] = useState(false);
-    const [selectedValue, setSelectedValue] = useState("8:00 - 9:00");
+
+    const [monday, setMonday] = useState('6:00');
+    const [tuesday, setTuesday] = useState('6:00');
+    const [wednesday, setWednesday] = useState('6:00');
+    const [thursday, setThursday] = useState('6:00');
+    const [friday, setFriday] = useState('6:00');
+    const [saturday, setSaturday] = useState('8:00');
+    const [sunday, setSunday] = useState('8:00');
 
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState('date');
@@ -93,10 +98,10 @@ export default function User({navigation}) {
     const toggleOverlay = () => {
         setVisible(!visible);
     };
+
     return (
         <View style={styles.container}>
             <Image source={require('../assets/logo.jpg')} style={styles.backgroundImage}/>
-            {/* <ImageBackground source={require('../assets/logo.jpg')}> */}
                 <ScrollView contentContainerStyle={styles.scrollView}>
                     <Banner 
                         name = {name} setName = {(name) => setName(name)}
@@ -131,48 +136,98 @@ export default function User({navigation}) {
                             onPress={toggleOverlay}
                         />
                         <Overlay overlayStyle={styles.overlay} isVisible={visible} onBackdropPress={toggleOverlay}>
-                            <Text h4 style={{marginBottom:20, marginHorizontal:30,}}>Elige fecha y hora</Text>
-                            {/* <Button buttonStyle={styles.buttonDate} onPress={showTimepicker} title={ "Hora:  " + Moment(date).format('HH:MM')} /> */}
+                            <Text h4 style={{marginBottom:20, marginHorizontal:30,}}>Reservación de fechas</Text>
+                            <DataTable style={styles.dataTable}>
+                                <DataTable.Header>
+                                    <DataTable.Title > Día      </DataTable.Title>
+                                    <DataTable.Title > Hora     </DataTable.Title>
+                                </DataTable.Header>
 
-                            <Button buttonStyle={styles.buttonDate} onPress={showDatepicker} title={ "Fecha:  " + Moment(date).format('DD-MM-YYYY')} />
-                            {
-                                Moment(date).format('dddd') == 'Saturday' || Moment(date).format('dddd') == 'Sunday' ? (
-                                    <Picker
-                                        selectedValue={selectedValue}
-                                        style={styles.selectHour}
-                                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                                    >
-                                        <Picker.Item label="8:00" value="8:00" />
-                                        <Picker.Item label="9:00" value="9:00" />
-                                    </Picker>
-                                ) : (
-                                    <Picker
-                                        selectedValue={selectedValue}
-                                        style={styles.selectHour}
-                                        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                                    >
-                                        <Picker.Item label="6:00" value="6:00" />
-                                        <Picker.Item label="7:00" value="7:00" />
-                                        <Picker.Item label="8:00" value="8:00" />
-                                        <Picker.Item label="9:00" value="9:00" />
-                                        <Picker.Item label="16:00" value="16:00" />
-                                        <Picker.Item label="17:00" value="17:00" />
-                                        <Picker.Item label="18:00" value="18:00" />
-                                        <Picker.Item label="19:00" value="19:00" />
-                                        <Picker.Item label="20:00" value="20:00" />
-                                    </Picker>
-                                )
-                            }                            
-                            {show && (
-                                <DateTimePicker
-                                testID="dateTimePicker"
-                                value={date}
-                                mode={mode}
-                                is24Hour={true}
-                                display="default"
-                                onChange={onChange}
-                                />
-                            )}
+                                <DataTable.Row>
+                                    <DataTable.Cell > Lunes    </DataTable.Cell>
+                                    <DataTable.Cell >
+                                        <Reserve
+                                            selectedValue = {monday}
+                                            setSelectedValue = {(monday) => setMonday(monday)}
+                                            day = 'Monday'
+                                        />
+                                    </DataTable.Cell>
+                                </DataTable.Row>
+
+                                 <DataTable.Row>
+                                    <DataTable.Cell > Martes    </DataTable.Cell>
+                                    <DataTable.Cell >
+                                        <Reserve
+                                            selectedValue = {tuesday}
+                                            setSelectedValue = {(tuesday) => setTuesday(tuesday)}
+                                            day = 'Tuesday'
+                                        />
+                                    </DataTable.Cell>
+                                </DataTable.Row>
+                                
+                                <DataTable.Row>
+                                    <DataTable.Cell > Miercoles   </DataTable.Cell>
+                                    <DataTable.Cell >
+                                        <Reserve
+                                            selectedValue = {wednesday}
+                                            setSelectedValue = {(wednesday) => setWednesday(wednesday)}
+                                            day = 'Wednesday'
+                                        />
+                                    </DataTable.Cell>
+                                </DataTable.Row>
+
+                                <DataTable.Row>
+                                    <DataTable.Cell > Jueves    </DataTable.Cell>
+                                    <DataTable.Cell >
+                                        <Reserve
+                                            selectedValue = {thursday}
+                                            setSelectedValue = {(thursday) => setThursday(thursday)}
+                                            day = 'Thursday'
+                                        />
+                                    </DataTable.Cell>
+                                </DataTable.Row>
+
+                                <DataTable.Row>
+                                    <DataTable.Cell > Viernes    </DataTable.Cell>
+                                    <DataTable.Cell >
+                                        <Reserve
+                                            selectedValue = {friday}
+                                            setSelectedValue = {(friday) => setFriday(friday)}
+                                            day = 'Friday'
+                                        />
+                                    </DataTable.Cell>
+                                </DataTable.Row>
+
+                                <DataTable.Row>
+                                    <DataTable.Cell > Sábado    </DataTable.Cell>
+                                    <DataTable.Cell >
+                                        <Reserve
+                                            selectedValue = {saturday}
+                                            setSelectedValue = {(saturday) => setSaturday(saturday)}
+                                            day = 'Saturday'
+                                        />
+                                    </DataTable.Cell>
+                                </DataTable.Row>
+
+                                <DataTable.Row>
+                                    <DataTable.Cell > Domingo    </DataTable.Cell>
+                                    <DataTable.Cell >
+                                        <Reserve
+                                            selectedValue = {sunday}
+                                            setSelectedValue = {(sunday) => setSunday(sunday)}
+                                            day = 'Sunday'
+                                        />
+                                    </DataTable.Cell>
+                                </DataTable.Row>
+                            </DataTable>
+                            <Button
+                                buttonStyle={styles.button}
+                                title='Guardar'
+                                onPress={() => {
+                                    //Guardar firebase
+                                    toggleOverlay()
+                                }}
+                            />
                         </Overlay>
                     </View>
                 </ScrollView>
@@ -210,12 +265,15 @@ const styles = StyleSheet.create({
     overlay: {
         justifyContent: 'center',
         alignItems: 'center',
-        width:'90%',
-        height:'40%'
+        width:'80%',
+        height:'80%'
     },
     containerButton: {
         flexDirection: "row",
         backgroundColor: 'rgba(250, 250, 250, .9)',
         justifyContent: 'center'
+    },
+    dataTable: {
+        width: '100%',
     }
 });

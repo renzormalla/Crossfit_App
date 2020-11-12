@@ -8,30 +8,33 @@ import firebase from 'firebase';
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from "@react-navigation/stack"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { createDrawerNavigator } from "@react-navigation/drawer"
 
 const NavStack = createStackNavigator();
-// const NavTab = createBottomTabNavigator();
 const NavDrawer = createDrawerNavigator();
 
 import Login from './screens/Login'
 import CambioClave from './screens/CambioClave'
 import Home from './screens/Home'
 import CreateUser from './screens/CreateUser'
-import Reserve from './screens/Reserve'
 import CerrarSesion from "./screens/CerraSesion";
 
 
 export default function App() {
   
   const [login, setLogin] = useState(false)
+  const [rol, setRol] = useState(false)
 
   if(!global.FirebaseConfigurado){
     cargarFirebaseConfig();
   }
   firebase.auth().onAuthStateChanged((usuario) => {
     if(usuario) {
+      let user = firebase.firestore().collection('User').doc(usuario.email)
+      user.get().then(function(doc){
+        console.log(doc.data().rol)
+        setRol(doc.data().rol)
+      })
       global.emailUsuario=usuario.email
       setLogin(true)
     } else {
@@ -54,26 +57,20 @@ export default function App() {
                   />
                 }
               }}/>
-              <NavDrawer.Screen name="CreateUser" component={CreateUser} options={{
-                drawerLabel: 'Crear Usuario',
-                drawerIcon: () => {
-                  return <Icon
-                    name='user-plus'
-                    type='font-awesome'
-                    color='#f2b90a'
-                  />
-                }
-              }}/>
-              <NavDrawer.Screen name="Reserve" component={Reserve} options={{
-                drawerLabel: 'Reservas',
-                drawerIcon: () => {
-                  return <Icon
-                    name='calendar-plus-o'
-                    type='font-awesome'
-                    color='#f2b90a'
-                  />
-                }
-              }}/>
+              {
+                rol != "crossfiter" ? (
+                  <NavDrawer.Screen name="CreateUser" component={CreateUser} options={{
+                    drawerLabel: 'Crear Usuario',
+                    drawerIcon: () => {
+                      return <Icon
+                        name='user-plus'
+                        type='font-awesome'
+                        color='#f2b90a'
+                      />
+                    }
+                  }}/>
+                ) : undefined
+              }
               <NavDrawer.Screen name="CerrarSesion" component={CerrarSesion} options={{
                 drawerLabel: 'Cerrar Sesion',
                 drawerIcon: () => {

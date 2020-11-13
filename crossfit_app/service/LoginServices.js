@@ -249,3 +249,44 @@ export const uploadDetail = (upload, user) => {
         Alert.alert("Error getting document:", error);
     });
 }
+
+export const getFireUsers = (getUsers) => {
+    console.log("USUARIOS")
+    let userList = []
+    let image = ''
+    firebase
+        .firestore()
+        .collection('User').get()
+        .then(async function(users) {
+            users.forEach(async function(doc) {
+                console.log("IMAGEN")
+                firebase.storage().ref().child(doc.id).getDownloadURL()
+                .then(res => {
+                    image = res
+                    userList.push({
+                        email:doc.id,
+                        name: doc.data().name + " " + doc.data().last,
+                        avatar_url: image,
+                    })
+                    console.log(doc.id," -- ", image)
+                    // console.log("Lista")
+                    // getUsers(userList)
+                })
+                .catch(error => {
+                    image = 'empty'
+                    userList.push({
+                        email:doc.id,
+                        name: doc.data().name + " " + doc.data().last,
+                        avatar_url: image,
+                    })
+                    console.log(doc.id," -- ", image)
+                    // console.log("Lista")
+                    // getUsers(userList)
+                });
+                console.log("Lista")
+                getUsers(userList)
+            });
+            // console.log("Lista")
+            // getUsers(userList)
+        })
+}

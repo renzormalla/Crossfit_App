@@ -18,6 +18,7 @@ import CambioClave from './screens/CambioClave'
 import Home from './screens/Home'
 import CreateUser from './screens/CreateUser'
 import CerrarSesion from "./screens/CerraSesion";
+import Search from "./screens/Search";
 
 
 export default function App() {
@@ -32,7 +33,6 @@ export default function App() {
     if(usuario) {
       let user = firebase.firestore().collection('User').doc(usuario.email)
       user.get().then(function(doc){
-        console.log(doc.data().rol)
         setRol(doc.data().rol)
       })
       global.emailUsuario=usuario.email
@@ -52,6 +52,16 @@ export default function App() {
                 drawerIcon: () => {
                   return <Icon
                     name='home'
+                    type='font-awesome'
+                    color='#f2b90a'
+                  />
+                }
+              }}/>
+              <NavDrawer.Screen name="Search" component={Search} options={{
+                drawerLabel: 'Buscar',
+                drawerIcon: () => {
+                  return <Icon
+                    name='search'
                     type='font-awesome'
                     color='#f2b90a'
                   />

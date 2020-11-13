@@ -7,6 +7,7 @@ import { uploadDetail } from '../service/LoginServices';
 import { uploadProfile } from '../service/LoginServices';
 import { useFocusEffect } from '@react-navigation/native';
 import { DataTable } from 'react-native-paper';
+import { create_reserve } from '../service/LoginServices'
 
 import Moment from 'moment';
 
@@ -19,13 +20,13 @@ const image = {uri:'../assets/logo.jpg'};
 export default function User({navigation}) {
     const [visible, setVisible] = useState(false);
 
-    const [monday, setMonday] = useState('6:00');
-    const [tuesday, setTuesday] = useState('6:00');
-    const [wednesday, setWednesday] = useState('6:00');
-    const [thursday, setThursday] = useState('6:00');
-    const [friday, setFriday] = useState('6:00');
-    const [saturday, setSaturday] = useState('8:00');
-    const [sunday, setSunday] = useState('8:00');
+    const [monday, setMonday] = useState('none');
+    const [tuesday, setTuesday] = useState('none');
+    const [wednesday, setWednesday] = useState('none');
+    const [thursday, setThursday] = useState('none');
+    const [friday, setFriday] = useState('none');
+    const [saturday, setSaturday] = useState('none');
+    const [sunday, setSunday] = useState('none');
 
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState('date');
@@ -226,6 +227,7 @@ export default function User({navigation}) {
                                 onPress={() => {
                                     //Guardar firebase
                                     toggleOverlay()
+                                    create_reserve(user, monday, tuesday, wednesday, thursday, friday, saturday, sunday)
                                 }}
                             />
                         </Overlay>

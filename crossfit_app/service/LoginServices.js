@@ -2,6 +2,10 @@ import { Alert } from "react-native"
 import React, { useState} from 'react';
 import firebase from 'firebase'
 import { exp } from "react-native-reanimated";
+//////////////////
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Setting a timer']);
+//////////////////
 
 
 export const ingresar = (email, password) => {
@@ -104,6 +108,79 @@ export const create_user = (email, password, name, last, rol, date) => {
             );
         });
     }
+}
+
+export const create_reserve = (user, monday, tuesday, wednesday, thursday, friday, saturday, sunday) => {
+
+    if(monday != 'none'){
+        validate_reserve(user, 'Monday')
+    }
+    if(tuesday != 'none'){
+        validate_reserve(user, 'Tuesday')
+    }
+    if(wednesday != 'none'){
+        validate_reserve(user, 'Wednesday')
+    }
+    if(thursday != 'none'){
+        validate_reserve(user, 'Thursday')
+    }
+    if(friday != 'none'){
+        validate_reserve(user, 'Friday')
+    }
+    if(saturday != 'none'){
+        validate_reserve(user, 'Saturday')
+    }
+    if(sunday != 'none'){
+        validate_reserve(user, 'Sunday')
+    }
+}
+
+export const validate_reserve = (user, day, hour) => {
+    var cont = 0;
+    var flag = false
+    var msg = ''
+    let reserve = firebase.firestore().collection('Reserve').doc(day).collection('Hour').doc(hour)
+        reserve.get().then(function(data){
+            if(!data.data().student){
+                reserve
+                .set(
+                    { student: [user] },
+                    { merge: true }
+                )
+            }else{
+                data.data().student.forEach(function(doc){
+                    
+                    if(cont == 9){
+                        Alert.alert(
+                            "Error",
+                            "Existen horarios llenos, verifique las reservas", [],
+                            { cancelable: true }
+                        );
+                    }
+                    else{
+                        flag = true
+                    }
+                    cont++;
+                })
+                if(flag == true){
+                    reserve
+                    .set(
+                        { student: [{ user }] },
+                        { merge: true }
+                    )
+                    .catch(function() {
+                        Alert.alert(
+                            "Error",
+                            "Conexion rechazada", [],
+                            { cancelable: true }
+                        );
+                    });
+                    flag = false
+                }
+                
+            }
+        })
+
 }
 
 export const signOut = () => {

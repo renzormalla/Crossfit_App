@@ -2,6 +2,10 @@ import { Alert } from "react-native"
 import React, { useState} from 'react';
 import firebase from 'firebase'
 import { exp } from "react-native-reanimated";
+//////////////////
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Setting a timer']);
+//////////////////
 
 
 export const ingresar = (email, password) => {
@@ -171,4 +175,45 @@ export const uploadDetail = (upload, user) => {
     }).catch(function(error) {
         Alert.alert("Error getting document:", error);
     });
+}
+
+export const getFireUsers = (getUsers) => {
+    console.log("USUARIOS")
+    let userList = []
+    let image = ''
+    firebase
+        .firestore()
+        .collection('User').get()
+        .then(async function(users) {
+            users.forEach(async function(doc) {
+                console.log("IMAGEN")
+                firebase.storage().ref().child(doc.id).getDownloadURL()
+                .then(res => {
+                    image = res
+                    userList.push({
+                        email:doc.id,
+                        name: doc.data().name + " " + doc.data().last,
+                        avatar_url: image,
+                    })
+                    console.log(doc.id," -- ", image)
+                    // console.log("Lista")
+                    // getUsers(userList)
+                })
+                .catch(error => {
+                    image = 'empty'
+                    userList.push({
+                        email:doc.id,
+                        name: doc.data().name + " " + doc.data().last,
+                        avatar_url: image,
+                    })
+                    console.log(doc.id," -- ", image)
+                    // console.log("Lista")
+                    // getUsers(userList)
+                });
+                console.log("Lista")
+                getUsers(userList)
+            });
+            // console.log("Lista")
+            // getUsers(userList)
+        })
 }

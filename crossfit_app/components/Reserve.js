@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 
 export default function Reserve({selectedValue, setSelectedValue, day}) {
-    console.log(day)
     return(
         day == 'Saturday' || day == 'Sunday' ? (
             <Picker
@@ -11,6 +10,7 @@ export default function Reserve({selectedValue, setSelectedValue, day}) {
                 style={styles.selectHour}
                 onValueChange={(data) => setSelectedValue(data)}
             >
+                <Picker.Item label="none" value="none" />
                 <Picker.Item label="8:00" value="8:00" />
                 <Picker.Item label="9:00" value="9:00" />
             </Picker>
@@ -20,6 +20,7 @@ export default function Reserve({selectedValue, setSelectedValue, day}) {
                 style={styles.selectHour}
                 onValueChange={(data) => setSelectedValue(data)}
             >
+                <Picker.Item label="none" value="none" />
                 <Picker.Item label="6:00" value="6:00" />
                 <Picker.Item label="7:00" value="7:00" />
                 <Picker.Item label="8:00" value="8:00" />

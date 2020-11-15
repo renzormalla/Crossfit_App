@@ -1,32 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList } from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import { DataTable } from 'react-native-paper';
-import { uploadDetail } from '../service/LoginServices';
 
-export default function ProfileDetail() 
+export default function ProfileDetail({user,back_squat, clean, clean_jerk, snatch, deadlift, pull_ups, fran, setBackSquat, 
+    setClean, setCleanJerk, setSnatch, setDeadlift, setPullUps, setFran}) 
     {
-        const [back_squat, setBackSquat] = useState('');
-        const [clean, setClean] = useState('');
-        const [clean_jerk, setCleanJerk] = useState('');
-        const [snatch, setSnatch] = useState('');
-        const [deadlift, setDeadlift] = useState('');
-        const [pull_ups, setPullUps] = useState('');
-        const [fran, setFran] = useState('');
-        const user = global.emailUsuario;
-
-    useEffect(() => {
-        uploadDetail(upload, user);
-    });
-
-    const upload = (data) => {
-        setBackSquat(data.back_squat)
-        setClean(data.clean)
-        setCleanJerk(data.clean_jerk)
-        setSnatch(data.snatch)
-        setDeadlift(data.deadlift)
-        setPullUps(data.pull_ups)
-        setFran(data.fran)
-    }
     return (
         <DataTable style={styles.dataTable}>
             <DataTable.Header>

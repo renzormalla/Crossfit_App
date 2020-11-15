@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList, Dimensions, TextInput  } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, FlatList, Dimensions, TextInput, SafeAreaView   } from 'react-native';
 import { Text } from 'react-native-elements'
 import { uploadProfile } from '../service/LoginServices';
 import ProfileDetailEdit from './ProfileDetailEdit'
-
+//////////////////
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+//////////////////
 export default function ProfileEdit({back_squat, clean, clean_jerk, snatch, deadlift, pull_ups, fran, 
     setBackSquat, setClean, setCleanJerk, setSnatch, setDeadlift, setPullUps, setFran, city, division, age, 
     height, weight, biography, setAge, setCity, setDivision, setHeight, setWeight, setBiography}) {
@@ -26,26 +29,26 @@ export default function ProfileEdit({back_squat, clean, clean_jerk, snatch, dead
 
     return (
         <View style={styles.container}>
-            <View style={styles.containerList}>
+            <SafeAreaView  style={styles.containerList}>
                 <FlatList 
                     data={[
-                    {key: 'CITY', value: city},
-                    {key: 'DIVISION', value: division},
-                    {key: 'AGE', value: age},
-                    {key: 'HEIGHT', value: height},
-                    {key: 'WEIGHT', value: weight},
+                    {key: 'CITY', value: city, func: (text) => setCity(text)},
+                    {key: 'DIVISION', value: division, func: (text) => setDivision(text)},
+                    {key: 'AGE', value: age, func: (text) => setAge(text)},
+                    {key: 'HEIGHT', value: height, func: (text) => setHeight(text)},
+                    {key: 'WEIGHT', value: weight, func: (text) => setWeight(text)},
                     ]}
                     renderItem={({item}) => 
                         <View style={styles.itemStyle}>
                             <Text style={styles.itemTitle}>{item.key}</Text>
-                            <TextInput> 
+                            <TextInput onChangeText={text => item.func(text)}> 
                                 <Text style={{alignSelf:'center'}}>{item.value}</Text> 
                             </TextInput>
                         </View>
                     }
                     numColumns={numColumns}
                 />
-            </View>
+            </SafeAreaView>
             <View style={{width:"100%"}}>
                 <Text h4 style={styles.bioTitle} > Biografia</Text>
                 <TextInput style={styles.bio} 

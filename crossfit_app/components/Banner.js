@@ -5,21 +5,9 @@ import * as firebase from 'firebase';
 import * as ImagePicker from 'expo-image-picker';
 import { uploadData } from '../service/LoginServices';
 
-export default function Banner() {
+export default function Banner({user, name, last, setName, setLast}) {
 
     const [image, setImage] = useState(null);
-    const [name, setName] = useState('');
-    const [last, setLast] = useState('');
-    const user = global.emailUsuario;
-
-    useEffect(() => {
-        uploadData(upload, user);
-    });
-
-    const upload = (data) => {
-        setName(data.name)
-        setLast(data.last)
-    }
 
     const test = firebase.storage().ref().child(user).getDownloadURL()
     .then((res) => {

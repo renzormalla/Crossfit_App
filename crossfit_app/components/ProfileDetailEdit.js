@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { Input } from 'react-native-elements'

@@ -1,7 +1,5 @@
 import { Alert } from "react-native"
-import React, { useState} from 'react';
 import firebase from 'firebase'
-import { exp } from "react-native-reanimated";
 //////////////////
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['Setting a timer']);

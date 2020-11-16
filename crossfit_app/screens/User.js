@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Image, View, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Text, Button, Overlay } from 'react-native-elements'
@@ -9,6 +9,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { DataTable } from 'react-native-paper';
 import { create_reserve } from '../service/LoginServices'
 
+
 import Moment from 'moment';
 
 import Banner from '../components/Banner'
@@ -17,7 +18,7 @@ import Reserve from '../components/Reserve';
 
 const image = {uri:'../assets/logo.jpg'};
 
-export default function User({navigation}) {
+export default function User({navigation, route}) {
     const [visible, setVisible] = useState(false);
 
     const [monday, setMonday] = useState('none');
@@ -46,11 +47,16 @@ export default function User({navigation}) {
     const [biography, setBiography] = useState('');
     const [name, setName] = useState('');
     const [last, setLast] = useState('');
-    const user = global.emailUsuario;
 
+    const [user, setUser] = useState(global.emailUsuario);
+    
     Moment.locale('en');
 
     useFocusEffect(() => {
+        if (route.params) {
+            setUser(route.params.userEmail)
+            console.log("CORREO: ", route.params.userEmail)
+        }
         uploadData(upload_data, user);
         uploadProfile(upload_profile, user);
         uploadDetail(upload_detail, user);
@@ -104,7 +110,7 @@ export default function User({navigation}) {
         <View style={styles.container}>
             <Image source={require('../assets/logo.jpg')} style={styles.backgroundImage}/>
                 <ScrollView contentContainerStyle={styles.scrollView}>
-                    <Banner 
+                    <Banner user = {user}
                         name = {name} setName = {(name) => setName(name)}
                         last = {last} setLast = {(last) => setLast(last)}
                     />
@@ -123,115 +129,121 @@ export default function User({navigation}) {
                         pull_ups = {pull_ups} setPullUps = {(pull_ups) => setPullUps(pull_ups)}
                         fran = {fran} setFran = {(fran) => setFran(fran)}
                     />
-                    <View style={styles.containerButton}>
-                        <Button
-                            buttonStyle={styles.button}
-                            title='Editar'
-                            onPress={() => {
-                                navigation.navigate("UserEdit")
-                            }}
-                        />
-                        <Button
-                            buttonStyle={styles.button}
-                            title='Reservar'
-                            onPress={toggleOverlay}
-                        />
-                        <Overlay overlayStyle={styles.overlay} isVisible={visible} onBackdropPress={toggleOverlay}>
-                            <Text h4 style={{marginBottom:20, marginHorizontal:30,}}>Reservación de fechas</Text>
-                            <DataTable style={styles.dataTable}>
-                                <DataTable.Header>
-                                    <DataTable.Title > Día      </DataTable.Title>
-                                    <DataTable.Title > Hora     </DataTable.Title>
-                                </DataTable.Header>
-
-                                <DataTable.Row>
-                                    <DataTable.Cell > Lunes    </DataTable.Cell>
-                                    <DataTable.Cell >
-                                        <Reserve
-                                            selectedValue = {monday}
-                                            setSelectedValue = {(monday) => setMonday(monday)}
-                                            day = 'Monday'
-                                        />
-                                    </DataTable.Cell>
-                                </DataTable.Row>
-
-                                 <DataTable.Row>
-                                    <DataTable.Cell > Martes    </DataTable.Cell>
-                                    <DataTable.Cell >
-                                        <Reserve
-                                            selectedValue = {tuesday}
-                                            setSelectedValue = {(tuesday) => setTuesday(tuesday)}
-                                            day = 'Tuesday'
-                                        />
-                                    </DataTable.Cell>
-                                </DataTable.Row>
-                                
-                                <DataTable.Row>
-                                    <DataTable.Cell > Miercoles   </DataTable.Cell>
-                                    <DataTable.Cell >
-                                        <Reserve
-                                            selectedValue = {wednesday}
-                                            setSelectedValue = {(wednesday) => setWednesday(wednesday)}
-                                            day = 'Wednesday'
-                                        />
-                                    </DataTable.Cell>
-                                </DataTable.Row>
-
-                                <DataTable.Row>
-                                    <DataTable.Cell > Jueves    </DataTable.Cell>
-                                    <DataTable.Cell >
-                                        <Reserve
-                                            selectedValue = {thursday}
-                                            setSelectedValue = {(thursday) => setThursday(thursday)}
-                                            day = 'Thursday'
-                                        />
-                                    </DataTable.Cell>
-                                </DataTable.Row>
-
-                                <DataTable.Row>
-                                    <DataTable.Cell > Viernes    </DataTable.Cell>
-                                    <DataTable.Cell >
-                                        <Reserve
-                                            selectedValue = {friday}
-                                            setSelectedValue = {(friday) => setFriday(friday)}
-                                            day = 'Friday'
-                                        />
-                                    </DataTable.Cell>
-                                </DataTable.Row>
-
-                                <DataTable.Row>
-                                    <DataTable.Cell > Sábado    </DataTable.Cell>
-                                    <DataTable.Cell >
-                                        <Reserve
-                                            selectedValue = {saturday}
-                                            setSelectedValue = {(saturday) => setSaturday(saturday)}
-                                            day = 'Saturday'
-                                        />
-                                    </DataTable.Cell>
-                                </DataTable.Row>
-
-                                <DataTable.Row>
-                                    <DataTable.Cell > Domingo    </DataTable.Cell>
-                                    <DataTable.Cell >
-                                        <Reserve
-                                            selectedValue = {sunday}
-                                            setSelectedValue = {(sunday) => setSunday(sunday)}
-                                            day = 'Sunday'
-                                        />
-                                    </DataTable.Cell>
-                                </DataTable.Row>
-                            </DataTable>
+                    {
+                        !route.params ? (
+                        <View style={styles.containerButton}>
                             <Button
                                 buttonStyle={styles.button}
-                                title='Guardar'
+                                title='Editar'
                                 onPress={() => {
-                                    //Guardar firebase
-                                    toggleOverlay()
-                                    create_reserve(user, monday, tuesday, wednesday, thursday, friday, saturday, sunday)
+                                    navigation.navigate("UserEdit")
                                 }}
                             />
-                        </Overlay>
-                    </View>
+                            <Button
+                                buttonStyle={styles.button}
+                                title='Reservar'
+                                onPress={toggleOverlay}
+                            />
+                            <Overlay overlayStyle={styles.overlay} isVisible={visible} onBackdropPress={toggleOverlay}>
+                                <View>
+                                    <Text h4 style={{marginBottom:20, marginHorizontal:30}}>Reservación de fechas</Text>
+                                    <DataTable style={styles.dataTable}>
+                                        <DataTable.Header>
+                                            <DataTable.Title > Día      </DataTable.Title>
+                                            <DataTable.Title > Hora     </DataTable.Title>
+                                        </DataTable.Header>
+
+                                        <DataTable.Row>
+                                            <DataTable.Cell > Lunes    </DataTable.Cell>
+                                            <DataTable.Cell >
+                                                <Reserve
+                                                    selectedValue = {monday}
+                                                    setSelectedValue = {(monday) => setMonday(monday)}
+                                                    day = 'Monday'
+                                                />
+                                            </DataTable.Cell>
+                                        </DataTable.Row>
+
+                                        <DataTable.Row>
+                                            <DataTable.Cell > Martes    </DataTable.Cell>
+                                            <DataTable.Cell >
+                                                <Reserve
+                                                    selectedValue = {tuesday}
+                                                    setSelectedValue = {(tuesday) => setTuesday(tuesday)}
+                                                    day = 'Tuesday'
+                                                />
+                                            </DataTable.Cell>
+                                        </DataTable.Row>
+                                        
+                                        <DataTable.Row>
+                                            <DataTable.Cell > Miercoles   </DataTable.Cell>
+                                            <DataTable.Cell >
+                                                <Reserve
+                                                    selectedValue = {wednesday}
+                                                    setSelectedValue = {(wednesday) => setWednesday(wednesday)}
+                                                    day = 'Wednesday'
+                                                />
+                                            </DataTable.Cell>
+                                        </DataTable.Row>
+
+                                        <DataTable.Row>
+                                            <DataTable.Cell > Jueves    </DataTable.Cell>
+                                            <DataTable.Cell >
+                                                <Reserve
+                                                    selectedValue = {thursday}
+                                                    setSelectedValue = {(thursday) => setThursday(thursday)}
+                                                    day = 'Thursday'
+                                                />
+                                            </DataTable.Cell>
+                                        </DataTable.Row>
+
+                                        <DataTable.Row>
+                                            <DataTable.Cell > Viernes    </DataTable.Cell>
+                                            <DataTable.Cell >
+                                                <Reserve
+                                                    selectedValue = {friday}
+                                                    setSelectedValue = {(friday) => setFriday(friday)}
+                                                    day = 'Friday'
+                                                />
+                                            </DataTable.Cell>
+                                        </DataTable.Row>
+
+                                        <DataTable.Row>
+                                            <DataTable.Cell > Sábado    </DataTable.Cell>
+                                            <DataTable.Cell >
+                                                <Reserve
+                                                    selectedValue = {saturday}
+                                                    setSelectedValue = {(saturday) => setSaturday(saturday)}
+                                                    day = 'Saturday'
+                                                />
+                                            </DataTable.Cell>
+                                        </DataTable.Row>
+
+                                        <DataTable.Row>
+                                            <DataTable.Cell > Domingo    </DataTable.Cell>
+                                            <DataTable.Cell >
+                                                <Reserve
+                                                    selectedValue = {sunday}
+                                                    setSelectedValue = {(sunday) => setSunday(sunday)}
+                                                    day = 'Sunday'
+                                                />
+                                            </DataTable.Cell>
+                                        </DataTable.Row>
+                                    </DataTable>
+                                    <Button
+                                        buttonStyle={styles.button}
+                                        title='Guardar'
+                                        onPress={() => {
+                                            //Guardar firebase
+                                            toggleOverlay()
+                                            create_reserve(user, monday, tuesday, wednesday, thursday, friday, saturday, sunday)
+                                        }}
+                                    />
+                                </View>                                
+                            </Overlay>
+                        </View>
+                        ) : (undefined)
+                    }
                 </ScrollView>
         </View>
     );
@@ -265,6 +277,8 @@ const styles = StyleSheet.create({
         backgroundColor:'#f2b90a'
     },
     overlay: {
+        flex:1,
+        textAlign:'center',
         justifyContent: 'center',
         alignItems: 'center',
         width:'80%',
@@ -276,6 +290,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     dataTable: {
-        width: '100%',
+        width: Dimensions.get('window').width - 100,
     }
 });

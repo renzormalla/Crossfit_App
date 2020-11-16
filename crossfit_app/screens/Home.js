@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, StatusBar, View} from 'react-native';
-import { Card, Input, Button } from 'react-native-elements'
+import { StyleSheet, StatusBar} from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 

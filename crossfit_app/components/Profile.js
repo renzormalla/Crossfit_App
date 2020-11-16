@@ -1,37 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, FlatList, Dimensions } from 'react-native';
+import { StyleSheet, View, FlatList, Dimensions, SafeAreaView  } from 'react-native';
 import { Text  } from 'react-native-elements'
-import { uploadProfile } from '../service/LoginServices';
 import ProfileDetail from './ProfileDetail'
+//////////////////
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+//////////////////
 
 
-
-export default function Profile() {
+export default function Profile({user, back_squat, clean, clean_jerk, snatch, deadlift, pull_ups, fran, 
+    setBackSquat, setClean, setCleanJerk, setSnatch, setDeadlift, setPullUps, setFran, city, division, age, 
+    height, weight, biography, setAge, setCity, setDivision, setHeight, setWeight, setBiography}) {
     let numColumns = 6;
-    const [city, setCity] = useState('');
-    const [division, setDivision] = useState('');
-    const [age, setAge] = useState('');
-    const [height, setHeight] = useState('');
-    const [weight, setWeight] = useState('');
-    const [biography, setBiography] = useState('');
-    const user = global.emailUsuario;
-
-    useEffect(() => {
-        uploadProfile(upload, user);
-    });
-
-    const upload = (data) => {
-        setCity(data.city)
-        setDivision(data.division)
-        setAge(data.age)
-        setHeight(data.height)
-        setWeight(data.weight)
-        setBiography(data.biography)
-    }
 
     return (
         <View style={styles.container}>
-            <View style={styles.containerList}>
+            <SafeAreaView  style={styles.containerList}>
                 <FlatList 
                     data={[
                     {key: 'CITY', value: city},
@@ -48,12 +32,20 @@ export default function Profile() {
                     }
                     numColumns={numColumns}
                 />
-            </View>
+            </SafeAreaView>
             <View style={{width:"100%"}}>
                 <Text h4 style={styles.bioTitle} > Biografía</Text>
                 <Text style={styles.bio} > {biography} </Text>
             </View>
-            <ProfileDetail />            
+            <ProfileDetail user = {user}
+                back_squat = {back_squat} setBackSquat = {(back_squat) => setBackSquat(back_squat)}
+                clean = {clean} setClean = {(clean) => setClean(clean)}
+                clean_jerk = {clean_jerk} setCleanJerk = {(clean_jerk) => setCleanJerk(clean_jerk)}
+                snatch = {snatch} setSnatch = {(snatch) => setSnatch(snatch)}
+                deadlift = {deadlift} setDeadlift = {(deadlift) => setDeadlift(deadlift)}
+                pull_ups = {pull_ups} setPullUps = {(pull_ups) => setPullUps(pull_ups)}
+                fran = {fran} setFran = {(fran) => setFran(fran)}
+            />            
         </View>
     );
 }

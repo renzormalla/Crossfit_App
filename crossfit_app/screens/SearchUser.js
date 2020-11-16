@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image, Dimensions } from "react-native";
 import { SearchBar, ListItem, Avatar } from "react-native-elements";
 
 import { getFireUsers } from "../service/LoginServices"
@@ -38,6 +38,7 @@ export default function SearchUser({navigation}) {
 
     return (
         <View style={styles.container}>
+            <Image source={require('../assets/logo.jpg')} style={styles.backgroundImage}/>
             <SearchBar
                 containerStyle={styles.search}
                 placeholder="Escriba aqui..."
@@ -76,7 +77,6 @@ export default function SearchUser({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     alignItems: "center",
     // justifyContent: "center",
   },
@@ -84,6 +84,17 @@ const styles = StyleSheet.create({
       width: '100%',
   },
   containerList:{
-      width:'100%'
-  }
+    backgroundColor: 'rgba(250, 250, 250, .9)',
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    width:'100%'
+  },
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode:'stretch',
+    position: 'absolute',
+    justifyContent: 'center',
+    },
 });

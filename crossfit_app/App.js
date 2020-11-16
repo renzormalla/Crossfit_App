@@ -19,10 +19,10 @@ import Home from './screens/Home'
 import CreateUser from './screens/CreateUser'
 import CerrarSesion from "./screens/CerraSesion";
 import Search from "./screens/Search";
-
+import Reserve from "./screens/Reserve";
 
 export default function App() {
-  
+
   const [login, setLogin] = useState(false)
   const [rol, setRol] = useState(false)
 
@@ -67,6 +67,16 @@ export default function App() {
                   />
                 }
               }}/>
+              <NavDrawer.Screen name="Reserve" component={Reserve} options={{
+                drawerLabel: 'Reservas',
+                drawerIcon: () => {
+                  return <Icon
+                    name='calendar'
+                    type='font-awesome'
+                    color='#f2b90a'
+                  />
+                }
+              }}/>
               {
                 rol != "crossfiter" ? (
                   <NavDrawer.Screen name="CreateUser" component={CreateUser} options={{
@@ -103,7 +113,7 @@ export default function App() {
 
     // <NavigationContainer>
     //   <Stack.Navigator>
-        
+
     //         <Stack.Screen name="Login" component={Login} />
     //         <Stack.Screen name="Crear Usuario" component={CreateUser} />
 

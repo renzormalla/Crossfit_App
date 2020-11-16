@@ -24,6 +24,20 @@ export const ingresar = (email, password) => {
 	}
 }
 
+export const getUserReserve = (day, hour, setUser) => {
+
+		let reserve = firebase
+			.firestore()
+			.collection('Reserve')
+			.doc(day)
+			.collection('Hour')
+			.doc(hour)
+
+		reserve.get().then(function(data){
+				setUser(data.data().student)
+		});
+}
+
 export const update_user = (name, last, email, city, division, age, height, weight, biography, back_squat, clean, clean_jerk, snatch, deadlift, pull_ups, fran) => {
     firebase
         .firestore()
@@ -113,25 +127,25 @@ export const create_user = (email, password, name, last, rol, date) => {
 export const create_reserve = (user, monday, tuesday, wednesday, thursday, friday, saturday, sunday) => {
 
     if(monday != 'none'){
-        validate_reserve(user, 'Monday')
+        validate_reserve(user, 'Monday', monday)
     }
     if(tuesday != 'none'){
-        validate_reserve(user, 'Tuesday')
+        validate_reserve(user, 'Tuesday', tuesday)
     }
     if(wednesday != 'none'){
-        validate_reserve(user, 'Wednesday')
+        validate_reserve(user, 'Wednesday', wednesday)
     }
     if(thursday != 'none'){
-        validate_reserve(user, 'Thursday')
+        validate_reserve(user, 'Thursday', thursday)
     }
     if(friday != 'none'){
-        validate_reserve(user, 'Friday')
+        validate_reserve(user, 'Friday', friday)
     }
     if(saturday != 'none'){
-        validate_reserve(user, 'Saturday')
+        validate_reserve(user, 'Saturday', saturday)
     }
     if(sunday != 'none'){
-        validate_reserve(user, 'Sunday')
+        validate_reserve(user, 'Sunday', sunday)
     }
 }
 
@@ -149,7 +163,7 @@ export const validate_reserve = (user, day, hour) => {
                 )
             }else{
                 data.data().student.forEach(function(doc){
-                    
+
                     if(cont == 9){
                         Alert.alert(
                             "Error",
@@ -158,26 +172,30 @@ export const validate_reserve = (user, day, hour) => {
                         );
                     }
                     else{
-                        flag = true
+                        if(doc == user){
+                            Alert.alert(
+                                "Error",
+                                "Ya se encuentra resgistrado es ese horario", [],
+                                { cancelable: true }
+                            );
+                        }
+                        else{
+                            flag = true
+                        }
                     }
                     cont++;
                 })
                 if(flag == true){
-                    reserve
-                    .set(
-                        { student: [{ user }] },
-                        { merge: true }
-                    )
-                    .catch(function() {
-                        Alert.alert(
-                            "Error",
-                            "Conexion rechazada", [],
-                            { cancelable: true }
-                        );
+                    firebase.firestore().runTransaction(transaction => {
+                        return transaction.get(reserve).then(snapshot => {
+                            const largerArray = snapshot.get('student');
+                            largerArray.push(user);
+                            transaction.update(reserve, 'student', largerArray);
+                        });
                     });
                     flag = false
                 }
-                
+
             }
         })
 

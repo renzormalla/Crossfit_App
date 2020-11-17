@@ -1,26 +1,19 @@
 {
   "expo": {
-    "name": "crossfit_app",
-    "slug": "crossfit_app",
+    "name": "RackBox App",
+    "icon": "./assets/icon_rackbox.png",
     "version": "1.0.0",
+    "slug": "crossfit_app",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "android": {
+      "package": "com.gmm.rackbox",
+      "versionCode": 1
+    },
     "ios": {
       "supportsTablet": true
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     }
   }
 }
